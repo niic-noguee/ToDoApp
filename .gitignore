@@ -1,3 +1,4 @@
+# ========== Android Studio ==========
 *.iml
 .gradle
 /local.properties
@@ -8,8 +9,30 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
+
+# ========== Build ==========
 /build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
+
+# ========== Kotlin/Java ==========
+*.kotlin_module
+
+# ========== Logs/Temp ==========
+*.log
+*.tmp
+
+# ========== Firebase ==========
+/app/google-services.json
+
+# ========== Jetpack Compose Debug ==========
+/debug/
+
+# ========== Local environment ==========
+.env
+
+# ========== OS Specific ==========
+*.swp
+*.swo
+Thumbs.db
