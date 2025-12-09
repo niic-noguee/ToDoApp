@@ -9,6 +9,7 @@ import com.example.todoapp.ui.register.RegisterScreen
 import com.example.todoapp.ui.home.HomeScreen
 import com.example.todoapp.ui.addtask.AddTaskScreen
 import com.example.todoapp.ui.edittask.EditTaskScreen
+import com.example.todoapp.ui.profile.ProfileScreen   // IMPORTANTE
 
 sealed class Screens(val route: String) {
     object Login : Screens("login")
@@ -18,6 +19,7 @@ sealed class Screens(val route: String) {
     object EditTask : Screens("edit_task/{taskId}") {
         fun routeWithId(id: String) = "edit_task/$id"
     }
+    object Profile : Screens("profile")
 }
 
 @Composable
@@ -46,6 +48,10 @@ fun AppNavGraph(navController: NavHostController) {
         composable(Screens.EditTask.route) { backStackEntry ->
             val taskId = backStackEntry.arguments?.getString("taskId") ?: ""
             EditTaskScreen(navController, taskId)
+        }
+
+        composable(Screens.Profile.route) {
+            ProfileScreen(navController)
         }
     }
 }
