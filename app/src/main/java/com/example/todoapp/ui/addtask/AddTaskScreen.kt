@@ -1,6 +1,10 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.todoapp.ui.addtask
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -10,7 +14,6 @@ import com.example.todoapp.ui.home.HomeViewModel
 import com.example.todoapp.ui.model.Task
 import java.util.UUID
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTaskScreen(
     navController: NavController,
@@ -21,14 +24,24 @@ fun AddTaskScreen(
 
     Scaffold(
         topBar = {
-            LargeTopAppBar(title = { Text("Adicionar Tarefa") })
+            TopAppBar(
+                title = { Text("Adicionar Tarefa") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigate("home") }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Voltar"
+                        )
+                    }
+                }
+            )
         }
     ) { padding ->
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(16.dp)
-                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
             OutlinedTextField(
@@ -38,8 +51,6 @@ fun AddTaskScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
-
             OutlinedTextField(
                 value = description,
                 onValueChange = { description = it },
@@ -47,26 +58,20 @@ fun AddTaskScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
-
             Button(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    if (title.isNotBlank()) {
-
-                        val newTask = Task(
-                            id = UUID.randomUUID().toString(),
-                            title = title,
-                            description = description,
-                            completed = false
-                        )
-
-                        viewModel.addTask(newTask)
-                        navController.popBackStack()
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
+                    val task = Task(
+                        id = UUID.randomUUID().toString(),
+                        title = title,
+                        description = description,
+                        completed = false
+                    )
+                    viewModel.addTask(task)
+                    navController.navigate("home")
+                }
             ) {
-                Text("Salvar")
+                Text("Salvar Tarefa")
             }
         }
     }
